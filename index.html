@@ -2,7 +2,6 @@
 <html>
   <head>
     <meta charset="utf-8">
-	<script src="jQuery/jquery-1.7.1.js"></script>
 	<script src="Script/settings.js"></script>
 	<script src="Script/ball.js"></script>
 	<script src="Script/bar.js"></script>
@@ -10,6 +9,7 @@
 	<script src="Script/score.js"></script>
 	<script src="Script/block.js"></script>
 	<script src="Script/board.js"></script>
+	<script src="Script/game.js"></script>
 	
 	<link rel="stylesheet" type="text/css" href="Style/Style.css" />
 	
@@ -23,71 +23,59 @@
 	var DEMO_MODE = false;
 	
 	function startGame(){
-		$(".button").hide();
+		document.getElementById('startButton').style.visibility='hidden';
+		var canvasDom = document.getElementById('myCanvas');
+		canvasDom.style.cursor = "none";
 		
-		document.getElementById('myCanvas').style.cursor = "none";
-		
-		var context = myCanvas.getContext('2d');
-		var canvas = new canvasObj(context,$("#myCanvas"));
+		var context = canvasDom.getContext('2d');
+		var canvas = new canvasObj(context, canvasDom);
 
+		run(canvas);
+	}
+	
+	function run(canvas) {
 		ball  = new ballObj(canvas);
 		bar = new barObj(canvas);
 		board = new boardObj(canvas);
-		board.draw(); // this could be in the constructor
 		score = new scoreObj(canvas);
-		score.draw();
-		
 		
 		// window.addEventListener('keydown',bar.doKeyDown,true);
 			
-		$(myCanvas).mousemove (function (evt) {
-			bar.X = evt.clientX;
-		});	
-		gameLoopId = setInterval(gameLoop,0);	
+		var canvasDom = document.getElementById('myCanvas');
+		canvasDom.addEventListener('mousemove', function (e) { bar.X = e.clientX; }, false);	
+			
+		gameLoopId = setInterval(gameLoop, 0);	
 	}
 
-	function gameLoop()
-	{
-		
-		board.didBallHitBlock(ball,score);
-		
-		
-		if(board.blocksLeft==0){
-			// Level cleared
-			score.Add(100);
-			clearInterval(gameLoopId);
-		}
-		
-		
-		if(ball.hitLower()){
-			if(DEMO_MODE)
-				ball.bounceOfCeling();
-			else{
-				if (!ball.intersects(bar)) {
-					// if ball misses bar, then game is over
-					clearInterval(gameLoopId);
-				}
-			}
-		}
-		
-		
-		
-		
-		bar.draw();
-		ball.draw();
-		
-		
-		
-	}
-	
 	</script>
     <title>Demo</title>
+	<style>
+
+	#myCanvas {
+		width : 800px;
+		height : 600px;
+	}
+		
+		@media screen and (max-width: 960px) { /* screens 960px or less */
+			#myCanvas {
+				width : 800px;
+				height : 600px;
+			}
+		}
+		/*
+		@media screen and (max-width: 524px) {
+			#myCanvas {
+				width : 480px;
+				height : 320px;
+			}		}
+			*/
+	</style>
   </head>
 	<body>
 	<h1>Break-out</h1>
-	<input type="button" value="Start" class="button" onclick="startGame()" />
+	<input type="button" value="Start" id="startButton" class="button" onclick="startGame()" />
 	
-	<canvas id="myCanvas" width="800" height="600">
+	<canvas id="myCanvas" width="800px" height="600px">
 	This text is displayed if your browser does not support HTML5 Canvas.
 	</canvas>
   </canvas>
