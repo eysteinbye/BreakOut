@@ -1,90 +1,105 @@
 <!doctype html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
-	<script src="Script/settings.js"></script>
-	<script src="Script/ball.js"></script>
-	<script src="Script/bar.js"></script>
-	<script src="Script/canvas.js"></script>
-	<script src="Script/score.js"></script>
-	<script src="Script/block.js"></script>
-	<script src="Script/board.js"></script>
-	<script src="Script/game.js"></script>
-	
-	<link rel="stylesheet" type="text/css" href="Style/Style.css" />
-	
-	<script type="text/javascript">
-	
-	/*
-	
-	Dont have them global
-	*/
-	
-	var ball;
-	var bar;
-	var board;
-	var score;
-	var gameLoopId; 
-	
-	var DEMO_MODE = false;
-	
-	var startGame = function(){
-		document.getElementById('startButton').style.visibility='hidden';
-		var canvasDom = document.getElementById('myCanvas');
-		canvasDom.style.cursor = "none";
-		
-		var context = canvasDom.getContext('2d');
-		var canvas = new canvasObj(context, canvasDom);
+    <script src="Script/settings.js"></script>
+    <script src="Script/ball.js"></script>
+    <script src="Script/bar.js"></script>
+    <script src="Script/canvas.js"></script>
+    <script src="Script/score.js"></script>
+    <script src="Script/block.js"></script>
+    <script src="Script/board.js"></script>
+    <script src="Script/game.js"></script>
 
-		run(canvas);
-	};
-	
-	var run = function (canvas) {
-		ball  = new ballObj(canvas);
-		bar = new barObj(canvas);
-		board = new boardObj(canvas);
-		score = new scoreObj(canvas);
-		
-		// window.addEventListener('keydown',bar.doKeyDown,true);
-			
-		var canvasDom = document.getElementById('myCanvas');
-		canvasDom.addEventListener('mousemove', function (e) { bar.X = e.clientX; }, false);	
-			
-		gameLoopId = setInterval(gameLoop, 0);	
-	};
+    <link rel="stylesheet" type="text/css" href="Style/Style.css" />
 
-	</script>
+    <script type="text/javascript">
+
+        /*
+        Dont have them global
+
+        Add suppoert fort any resolution
+        Add pause
+        Add hightscore (online)
+        Restart when you die
+        Use a game-engin for faster loop
+        Use sprites for bal, paddle and blocks
+
+        Do all drawing in own loop, and not in enteie move
+
+        */
+
+        var ball;
+        var bar;
+        var board;
+        var score;
+        var gameLoopId;
+
+        var DEMO_MODE = false;
+
+        var startGame = function () {
+            document.getElementById('startButton').style.visibility = 'hidden';
+            var canvasDom = document.getElementById('GameCanvas');
+            canvasDom.style.visibility = "visible";
+            canvasDom.style.cursor = "none";
+            canvasDom.width = (window.innerWidth - 50);
+            canvasDom.height = (window.innerHeight - 50);
+            // It will not work on other resolutions now.. so I will remake it to work on any
+            canvasDom.width = 800;
+            canvasDom.height = 600;
+
+
+            var context = canvasDom.getContext('2d');
+            var canvas = new CanvasObj(context, canvasDom);
+
+            run(canvas);
+        };
+
+        var run = function (canvas) {
+            ball = new BallObj(canvas);
+            bar = new BarObj(canvas);
+            board = new BoardObj(canvas);
+            score = new ScoreObj(canvas);
+
+            // window.addEventListener('keydown',bar.doKeyDown,true);
+            window.addEventListener('keydown', onKey, true);
+
+            var canvasDom = document.getElementById('GameCanvas');
+            canvasDom.addEventListener('mousemove', function (e) { bar.X = e.clientX; }, false);
+
+            gameLoopId = setInterval(gameLoop, 0);
+        };
+
+
+
+        var onKey = function (evt) {
+            switch (evt.keyCode) {
+                case 80:  // p was pressed (112)                    if (gameLoopId == null) {
+                        pause();                        break;
+                    } else {
+                        resume();
+                        break;
+                    }
+            }
+        };
+
+        var pause = function () {
+            gameLoopId = setInterval(gameLoop, 0);
+        };
+
+        var resume = function () {
+            clearInterval(gameLoopId);
+            gameLoopId = null;
+        };
+
+    </script>
     <title>Demo</title>
-	<style>
 
-	#myCanvas {
-		width : 800px;
-		height : 600px;
-	}
-		
-		@media screen and (max-width: 960px) { /* screens 960px or less */
-			#myCanvas {
-				width : 800px;
-				height : 600px;
-			}
-		}
-		/*
-		@media screen and (max-width: 524px) {
-			#myCanvas {
-				width : 480px;
-				height : 320px;
-			}		}
-			*/
-	</style>
-  </head>
-	<body>
-	<h1>Break-out</h1>
-	<input type="button" value="Start" id="startButton" class="button" onclick="startGame()" />
-	
-	<canvas id="myCanvas" width="800px" height="600px">
-	This text is displayed if your browser does not support HTML5 Canvas.
-	</canvas>
-  </canvas>
-    
-  </body>
+</head>
+<body>
+    <input type="button" value="Start" id="startButton" class="button" onclick="startGame()" />
+
+    <canvas id="GameCanvas" style="visibility: hidden">This text is displayed if your browser does not support HTML5 Canvas.</canvas>
+
+</body>
 </html>
