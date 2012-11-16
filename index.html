@@ -14,6 +14,12 @@
 	<link rel="stylesheet" type="text/css" href="Style/Style.css" />
 	
 	<script type="text/javascript">
+	
+	/*
+	
+	Dont have them global
+	*/
+	
 	var ball;
 	var bar;
 	var board;
@@ -22,7 +28,7 @@
 	
 	var DEMO_MODE = false;
 	
-	function startGame(){
+	var startGame = function(){
 		document.getElementById('startButton').style.visibility='hidden';
 		var canvasDom = document.getElementById('myCanvas');
 		canvasDom.style.cursor = "none";
@@ -31,9 +37,9 @@
 		var canvas = new canvasObj(context, canvasDom);
 
 		run(canvas);
-	}
+	};
 	
-	function run(canvas) {
+	var run = function (canvas) {
 		ball  = new ballObj(canvas);
 		bar = new barObj(canvas);
 		board = new boardObj(canvas);
@@ -45,7 +51,7 @@
 		canvasDom.addEventListener('mousemove', function (e) { bar.X = e.clientX; }, false);	
 			
 		gameLoopId = setInterval(gameLoop, 0);	
-	}
+	};
 
 	</script>
     <title>Demo</title>
