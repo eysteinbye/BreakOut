@@ -1,7 +1,6 @@
 /*
 Dont have them global
 Add hightscore (online)
-Restart when you die
 Use a game-engin for faster loop
 Use sprites for bal, paddle and blocks
 */
@@ -13,6 +12,7 @@ var score;
 var gameLoopId;
 var DEMO_MODE = false;
 var paint;
+var showFps = false;
 var startGame = function () {
     document.getElementById('startButton').style.visibility = 'hidden';
     var canvasDom = document.getElementById('GameCanvas');
@@ -57,14 +57,17 @@ var run = function () {
 
 var onKey = function (evt) {
     switch (evt.keyCode) {
-        case 80:  // p was pressed (112)
-            if (gameLoopId == null) {
-                pauseGame();
-                break;
-            } else {
-                resumeGame();
-                break;
-            }
+    case 80:  // p was pressed (112)
+        if (gameLoopId == null) {
+            pauseGame();
+            break;
+        } else {
+            resumeGame();
+            break;
+        }
+    case 70:  // f
+       showFps = !showFps;
+	   if(!showFps) paint.clearFps();
     }
 };
 
@@ -89,9 +92,9 @@ var gameLoop = function () {
 	var sidenSist = timeDifference(nowTime, lastTime);
 	
 
-
-paint.drawFps(Math.round(1 / (sidenSist/1000)));
-
+	if(showFps){
+		paint.drawFps(Math.round(1 / (sidenSist/1000)));
+	}
 	lastTime = nowTime;
 	
    var block = board.didBallHitBlock(ball, score);
@@ -104,6 +107,8 @@ paint.drawFps(Math.round(1 / (sidenSist/1000)));
            // Level cleared
            score.Add(100);
            clearInterval(gameLoopId);
+			startGame();
+		   
        }
    }
    
@@ -114,6 +119,7 @@ paint.drawFps(Math.round(1 / (sidenSist/1000)));
             if (!ball.intersects(bar)) {
                 // if ball misses bar, then game is over
                 clearInterval(gameLoopId);
+				startGame();
             }
         }
     }

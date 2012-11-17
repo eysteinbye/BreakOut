@@ -29,6 +29,15 @@ Paint.prototype.drawFps = function (fps) {
 
 };
 
+Paint.prototype.clearFps = function () {
+
+    var top = 10;
+    var height = 20; 
+
+    this.canvas.Context.clearRect(10, top, 300, height);
+
+};
+
 
 Paint.prototype.drawBar = function (bar) {
 
