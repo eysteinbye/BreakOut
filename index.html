@@ -1,6 +1,9 @@
 <!doctype html>
+
 <html>
+
 <head>
+
     <meta charset="utf-8">
     <script src="Script/settings.js"></script>
     <script src="Script/ball.js"></script>
@@ -14,19 +17,15 @@
     <link rel="stylesheet" type="text/css" href="Style/Style.css" />
 
     <script type="text/javascript">
-
         /*
         Dont have them global
-
         Add suppoert fort any resolution
         Add pause
         Add hightscore (online)
         Restart when you die
         Use a game-engin for faster loop
         Use sprites for bal, paddle and blocks
-
         Do all drawing in own loop, and not in enteie move
-
         */
 
         var ball;
@@ -34,9 +33,8 @@
         var board;
         var score;
         var gameLoopId;
-
         var DEMO_MODE = false;
-
+		var paint;
         var startGame = function () {
             document.getElementById('startButton').style.visibility = 'hidden';
             var canvasDom = document.getElementById('GameCanvas');
@@ -51,55 +49,76 @@
 
             var context = canvasDom.getContext('2d');
             var canvas = new CanvasObj(context, canvasDom);
+            paint = new Paint(canvas);
 
-            run(canvas);
+            run();
         };
 
-        var run = function (canvas) {
-            ball = new BallObj(canvas);
-            bar = new BarObj(canvas);
-            board = new BoardObj(canvas);
-            score = new ScoreObj(canvas);
+      	var run = function () {
+			ball = new BallObj();
+		    bar = new BarObj();
+            board = new BoardObj();
+			
+        	score = new ScoreObj();
 
-            // window.addEventListener('keydown',bar.doKeyDown,true);
-            window.addEventListener('keydown', onKey, true);
-
+			// draw once, but not in gameloop
+	      	paint.drawBlocks(board.blocks);
+			
+		    window.addEventListener('keydown', onKey, true);
+			
             var canvasDom = document.getElementById('GameCanvas');
-            canvasDom.addEventListener('mousemove', function (e) { bar.X = e.clientX; }, false);
+			
+			canvasDom.addEventListener('mousemove', function (e){ 
+				bar.X = e.clientX; 
+				paint.drawBar(bar);	
+			}, true);
 
+			//Bruker: ball, score, board
             gameLoopId = setInterval(gameLoop, 0);
+			
         };
-
-
 
         var onKey = function (evt) {
             switch (evt.keyCode) {
-                case 80:  // p was pressed (112)                    if (gameLoopId == null) {
-                        pause();                        break;
+                case 80:  // p was pressed (112)
+                    if (gameLoopId == null) {
+                        pauseGame();
+                        break;
                     } else {
-                        resume();
+                        resumeGame();
                         break;
                     }
             }
         };
 
-        var pause = function () {
+        var pauseGame = function () {
             gameLoopId = setInterval(gameLoop, 0);
         };
 
-        var resume = function () {
+        var resumeGame = function () {
             clearInterval(gameLoopId);
             gameLoopId = null;
         };
 
     </script>
+
     <title>Demo</title>
 
+
+
 </head>
+
 <body>
+
     <input type="button" value="Start" id="startButton" class="button" onclick="startGame()" />
+
+
 
     <canvas id="GameCanvas" style="visibility: hidden">This text is displayed if your browser does not support HTML5 Canvas.</canvas>
 
+
+
 </body>
+
 </html>
+
