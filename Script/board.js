@@ -21,7 +21,6 @@ var BoardObj = function () {
         for (var j = 0; j < this.Columns; j++) {
 
             this.blocks[count] = new blockObj(X, Y);
-            //this.blocks[count].draw();
             X += tmpBlock.Width;
             count++;
 

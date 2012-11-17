@@ -21,7 +21,7 @@ BallObj.prototype.move = function () {
     this.X += this.dx;
     this.Y += this.dy;
 //    if (this.Left() <= 0 || this.Right() >= this.canvas.Width) this.bounceOfWall();
-    if (this.Left() <= 0 || this.Right() >= 800) this.bounceOfWall();
+    if (this.Left() <= 0 || this.Right() >= WIDTH) this.bounceOfWall();
     if (this.Upper() <= 0) this.bounceOfCeling();
 
 };
@@ -99,7 +99,7 @@ BallObj.prototype.goingUpLeft = function () {
 BallObj.prototype.hitLower = function () {
 
 //    return (this.Lower() >= this.canvas.Lower);
-    return (this.Lower() >= 550);
+    return (this.Lower() >= (HEIGHT - MARGING_UNDER_BAR));
 
 };
 

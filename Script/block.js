@@ -22,7 +22,6 @@ blockObj.prototype.intersectCorner = function (ball) {
         if (this.Upper == ball.Lower() && this.Left == ball.Right() && ball.goingDownRight()) corner = true; // Upper Left corner
         if (this.Upper == ball.Lower() && this.Right == ball.Left() && ball.goingDownLeft()) corner = true; // Upper Right corner
         if (corner) this.remove();
-	//	alert(corner;)
     }
     return corner;
 
@@ -43,7 +42,6 @@ blockObj.prototype.intersectSide = function (ball) {
         }
 
         if (side) this.remove();
-	//	alert(side);
     }
     return side;
 

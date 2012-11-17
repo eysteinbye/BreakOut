@@ -1,3 +1,6 @@
+var HEIGHT = 800;
+var WIDTH = 1000;
+
 var BALL_START_X = 20;
 var BALL_START_Y = 300;
 var BALL_RADIUS = 10;

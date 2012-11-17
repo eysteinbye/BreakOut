@@ -5,16 +5,30 @@ var Paint = function (c) {
   
 Paint.prototype.drawScore = function (score) {
 
-    var top = this.canvas.Height - MARGING_UNDER_BAR + BAR_HEIGHT; // 580
-    var height = this.canvas.Height - top; // 20
+    var top = this.canvas.Height - MARGING_UNDER_BAR + BAR_HEIGHT; 
+    var height = this.canvas.Height - top; 
 
     this.canvas.Context.clearRect(10, top, 300, height);
 
     this.canvas.Context.strokeStyle = "#ffffff";
     this.canvas.Context.font = '14px verdana';
-    this.canvas.Context.strokeText('Score : ' + score, 10, 595);
+    this.canvas.Context.strokeText('Score : ' + score, 10, (top+15));
 
 };
+
+Paint.prototype.drawFps = function (fps) {
+
+    var top = 10;
+    var height = 20; 
+
+    this.canvas.Context.clearRect(10, top, 300, height);
+
+    this.canvas.Context.strokeStyle = "#ffffff";
+    this.canvas.Context.font = '14px verdana';
+    this.canvas.Context.strokeText('FPS : ' + fps, 10, (top+15));
+
+};
+
 
 Paint.prototype.drawBar = function (bar) {
 
