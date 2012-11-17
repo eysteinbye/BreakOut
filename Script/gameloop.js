@@ -3,7 +3,12 @@ Dont have them global
 Add hightscore (online)
 Use a game-engin for faster loop
 Use sprites for bal, paddle and blocks
+Lage Logo
+Preload
+Lage about
+Lage Privacy
 */
+
 
 var ball;
 var bar;
@@ -13,6 +18,35 @@ var gameLoopId;
 var DEMO_MODE = false;
 var paint;
 var showFps = false;
+
+
+var HEIGHT;
+var WIDTH;
+
+var BALL_START_X;
+var BALL_START_Y;
+var BALL_RADIUS = 10;
+
+var BAR_START_X;
+var BAR_WIDTH;
+var BAR_HEIGHT;
+
+var MARGING_UNDER_BAR = 50;
+
+
+var BLOCKS_START_LEFT = 100;
+var BLOCKS_START_TOP = 100;
+
+var NUMBER_OF_BLOCKROWS = 7;
+var NUMBER_OF_BLOCKS_ON_ROW = 10;
+
+var BLOCK_HEIGHT;
+var BLOCK_WIDTH;
+var BLOCK_BORDER_WIDTH = 1;
+
+
+var lastTime = new Date();
+
 var startGame = function () {
     document.getElementById('startButton').style.visibility = 'hidden';
     var canvasDom = document.getElementById('GameCanvas');
@@ -23,6 +57,22 @@ var startGame = function () {
     canvasDom.width = WIDTH;
     canvasDom.height = HEIGHT;
 
+
+
+    var widthOfAllBlocks = WIDTH - (BLOCKS_START_LEFT * 2);
+    BLOCK_WIDTH = widthOfAllBlocks / NUMBER_OF_BLOCKS_ON_ROW;
+
+
+    var heightOfAllBlocks = HEIGHT / 3;
+    BLOCK_HEIGHT = heightOfAllBlocks / NUMBER_OF_BLOCKROWS;
+
+
+    BALL_START_X = WIDTH / 2;
+    BALL_START_Y = HEIGHT / 2;
+
+    BAR_START_X = WIDTH / 2;
+    BAR_HEIGHT = BLOCK_HEIGHT / 2;
+    BAR_WIDTH = BLOCK_WIDTH;
 
     var context = canvasDom.getContext('2d');
     var canvas = new CanvasObj(context, canvasDom);
@@ -50,10 +100,9 @@ var run = function () {
 		paint.drawBar(bar);	
 	}, true);
 
-	//Bruker: ball, score, board
     gameLoopId = setInterval(gameLoop, 4);
-			
 };
+
 
 var onKey = function (evt) {
     switch (evt.keyCode) {
@@ -81,18 +130,12 @@ var resumeGame = function () {
 };
 
 
-var lastTime = new Date(2010,5,10,8,0);
 
 var gameLoop = function () {
-	
-	
-	
 	var nowTime = new Date();
-	
 	var sidenSist = timeDifference(nowTime, lastTime);
-	
 
-	if(showFps){
+	if (showFps) {
 		paint.drawFps(Math.round(1 / (sidenSist/1000)));
 	}
 	lastTime = nowTime;
@@ -124,22 +167,12 @@ var gameLoop = function () {
         }
     }
 
-	//paint.drawBar(bar);
 	paint.drawBall(ball);
-	
+
 };
 
 
 function timeDifference(endDate,startDate) {
- var difference = endDate.getTime() - startDate.getTime();
- //difference = Math.floor(difference/1000);
- return difference;
+    var difference = endDate.getTime() - startDate.getTime();
+    return difference;
 } 
-
-/*
-var startDateTime = new Date(2010,5,10,8,0);
-var endDateTime = new Date(2010,5,11,8,0); 
- 
-var secDiff = timeSecondDifference(endDateTime,startDateTime); 
-
-*/

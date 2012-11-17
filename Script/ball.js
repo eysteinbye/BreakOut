@@ -1,9 +1,13 @@
+
+
+var BallSpeed = 1;
+
 var BallObj = function () {
 
     this.X = BALL_START_X;
     this.Y = BALL_START_Y;
-    this.dx = 1;
-    this.dy = 1;
+    this.dx = BallSpeed;
+    this.dy = -BallSpeed;
     this.Radius = BALL_RADIUS;
     this.Diameter = this.Radius * 2;
 
@@ -20,7 +24,6 @@ var BallObj = function () {
 BallObj.prototype.move = function () {
     this.X += this.dx;
     this.Y += this.dy;
-//    if (this.Left() <= 0 || this.Right() >= this.canvas.Width) this.bounceOfWall();
     if (this.Left() <= 0 || this.Right() >= WIDTH) this.bounceOfWall();
     if (this.Upper() <= 0) this.bounceOfCeling();
 
@@ -44,18 +47,18 @@ BallObj.prototype.bounceOfBar = function () {
     var posOnBar = this.X - bar.X;
     var rel = (posOnBar / bar.Width) * 100; // 0-1
 
-    if (Math.abs(this.dy) == 2) this.dy /= 2;
+    if (Math.abs(this.dy) == (BallSpeed * 2)) this.dy /= (BallSpeed * 2);
 
     this.dy = -this.dy;
     if (rel < 10) {
 
-        this.dy *= 2;
-        this.dx = -1;
+        this.dy *= (BallSpeed*2);
+        this.dx = -BallSpeed;
 
     } else if (rel > 90) {
 
-        this.dy *= 2;
-        this.dx = 1;
+        this.dy *= (BallSpeed * 2);
+        this.dx = BallSpeed;
 
     }
 
@@ -75,22 +78,22 @@ BallObj.prototype.bounceBack = function () {
 // Direction of the ball (needed when hitting corners)
 BallObj.prototype.goingDownRight = function () {
 
-    return (this.dx == 1 && this.dy == 1);
+    return (this.dx == BallSpeed && this.dy == BallSpeed);
 
 };
 BallObj.prototype.goingUpRight = function () {
 
-    return (this.dx == 1 && this.dy == -1);
+    return (this.dx == BallSpeed && this.dy == -BallSpeed);
 
 };
 BallObj.prototype.goingDownLeft = function () {
 
-    return (this.dx == -1 && this.dy == 1);
+    return (this.dx == -BallSpeed && this.dy == BallSpeed);
 
 };
 BallObj.prototype.goingUpLeft = function () {
 
-    return (this.dx == -1 && this.dy == -1);
+    return (this.dx == -BallSpeed && this.dy == -BallSpeed);
 
 };
 
@@ -98,7 +101,6 @@ BallObj.prototype.goingUpLeft = function () {
 
 BallObj.prototype.hitLower = function () {
 
-//    return (this.Lower() >= this.canvas.Lower);
     return (this.Lower() >= (HEIGHT - MARGING_UNDER_BAR));
 
 };
