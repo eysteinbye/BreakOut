@@ -6,9 +6,3 @@
  |____/|_|  \___|\__,_|_|\_\ \____/ \__,_|\__|
      A HTML5 breakout game in JavaScript.
 
-This is a simple version, more will be added :)
-
-Todo:
-- Change ball direction angle when hitting the bar on the edge or at speed.
-- The speed of the game loop is to slow
-- An XorPut of that ball would be faster then the clear I use now (if canvas can do that)

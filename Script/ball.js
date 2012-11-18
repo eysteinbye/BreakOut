@@ -1,6 +1,6 @@
 
 
-var BallSpeed = 1;
+var BallSpeed = 2;
 
 var BallObj = function () {
 
@@ -45,7 +45,7 @@ BallObj.prototype.bounceOfCeling = function () {
 BallObj.prototype.bounceOfBar = function () {
 
     var posOnBar = this.X - bar.X;
-    var rel = (posOnBar / bar.Width) * 100; // 0-1
+    var rel = (posOnBar / bar.Width) * 100;
 
     if (Math.abs(this.dy) == (BallSpeed * 2)) this.dy /= (BallSpeed * 2);
 

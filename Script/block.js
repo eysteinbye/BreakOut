@@ -53,7 +53,11 @@ blockObj.prototype.intersectFlat = function (ball) {
 
         if ((this.Left < ball.Left() && ball.Left() < this.Right) || (this.Left < ball.Right() && ball.Right() < this.Right)) {
 			
-            if (this.Upper == ball.Lower() || this.Lower == ball.Upper()) {
+ //           if (this.Upper == ball.Lower() || this.Lower == ball.Upper()) {
+ 
+ // En bedre sjekk som tillater at ballen beveger seg mer enn 1
+ // er den mye tregere?
+            if ((ball.Upper() <= this.Lower && ball.Upper() >=  this.Upper) || (ball.Lower() >= this.Upper && ball.Lower() <= this.Lower) ) {
                 flat = true;
 
             }
