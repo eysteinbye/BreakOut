@@ -86,12 +86,26 @@ Paint.prototype.drawBlock = function (block) {
 
         var borderWidth = BLOCK_BORDER_WIDTH;
 
+
         this.canvas.Context.beginPath();
-        var gradient = this.canvas.Context.createLinearGradient(block.X, block.Y, block.X + block.Width, block.Y + block.Height)
-        gradient.addColorStop(0, 'Magenta');
-        gradient.addColorStop(.5, 'Pink');
-        gradient.addColorStop(1, 'Yellow');
-        this.canvas.Context.fillStyle = gradient;
+		var gradient;      
+	
+		if(block.hitsLeft==2){
+			gradient = this.canvas.Context.createLinearGradient(block.X, block.Y, block.X + block.Width, block.Y + block.Height)
+        	gradient.addColorStop(0, 'Magenta');
+        	gradient.addColorStop(.5, 'Pink');
+        	gradient.addColorStop(1, 'Yellow');
+		}else if(block.hitsLeft==1){
+			gradient = this.canvas.Context.createLinearGradient(block.X, block.Y, block.X + block.Width, block.Y + block.Height)
+    		gradient.addColorStop(0, 'Blue');
+    		gradient.addColorStop(.5, 'gray');
+    		gradient.addColorStop(1, 'black');
+		}
+		
+		this.canvas.Context.fillStyle = gradient;
+
+
+
 
         this.canvas.Context.rect(block.X + borderWidth, block.Y + borderWidth, block.Width - (borderWidth * 2), block.Height - (borderWidth * 2));
         this.canvas.Context.fill();
@@ -113,6 +127,7 @@ Paint.prototype.drawBlocks = function (blocks) {
 };
 
 Paint.prototype.removeBlock = function (block) {
+	board.blocksLeft--;
     this.canvas.Context.clearRect(block.X, block.Y, block.Width, block.Height + 1);
 
 };

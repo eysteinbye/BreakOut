@@ -17,10 +17,13 @@ var ball;
 var bar;
 var board;
 var score;
-var gameLoopId;
-var DEMO_MODE = false;
 var paint;
+
+var gameLoopId;
+
+var DEMO_MODE = false;
 var showFps = false;
+
 
 
 var HEIGHT;
@@ -111,16 +114,20 @@ var onKey = function (evt) {
     switch (evt.keyCode) {
     case 80:  // p was pressed (112)
         if (gameLoopId == null) {
-            pauseGame();
-            break;
+            pauseGame();			
         } else {
             resumeGame();
-            break;
         }
+        break;				
     case 70:  // f
        showFps = !showFps;
 	   if(!showFps) paint.clearFps();
-    }
+       break;
+	case 68: // d
+		DEMO_MODE = !DEMO_MODE;
+   		break;
+	}
+	
 };
 
 var pauseGame = function () {
@@ -145,15 +152,18 @@ var gameLoop = function () {
 	
    var block = board.didBallHitBlock(ball, score);
    if(block != null) {
+	   block.hit();
        score.Add(5);
-	   paint.removeBlock(block);
        paint.drawScore(score.Score);
+	   // Redraw
+   	   paint.drawBlock(block);
   
        if (board.blocksLeft == 0) {
            // Level cleared
            score.Add(100);
            clearInterval(gameLoopId);
 			startGame();
+			// Start level 2
 		   
        }
    }

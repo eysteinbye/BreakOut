@@ -12,28 +12,25 @@ var BoardObj = function () {
     this.blocksLeft = this.blocksTotal;
     this.blocks = new Array(this.blocksTotal);
 
-    var tmpBlock = new blockObj( 0, 0);
+
+	var level = [1,1,1,1,1,1,1,1,1,1, 1,2,2,2,2,2,2,2,2,1, 1,1,1,1,1,1,1,1,1,1, 1,2,2,2,2,2,2,2,2,1, 1,1,1,1,1,1,1,1,1,1, 1,2,2,2,2,2,2,2,2,1, 1,1,1,1,1,1,1,1,1,1];
+    var tmpBlock = new blockObj(0, 0, 1);
     var X = this.Left;
     var Y = this.Upper;
     var count = 0;
     for (var i = 0; i < this.Rows; i++) {
-
         for (var j = 0; j < this.Columns; j++) {
-
-            this.blocks[count] = new blockObj(X, Y);
-            X += tmpBlock.Width;
+		    this.blocks[count] = new blockObj(X, Y, level[count]);
             count++;
-
+            X += tmpBlock.Width;
         }
         Y += tmpBlock.Height;
         this.Right = X;
         X = this.Left;
-
     }
     this.Lower = Y;
-
-
 };
+
 BoardObj.prototype.didBallHitBlock = function (ball, score) {
     var bounceC = false;
     var bounceS = false;
@@ -47,17 +44,17 @@ BoardObj.prototype.didBallHitBlock = function (ball, score) {
 
         if (block.intersectCorner(ball)) {
             bounceC = true;
-            this.blocksLeft--;
+            //this.blocksLeft--;
 			blockToRemove = block;
         }
         if (block.intersectSide(ball)) {
             bounceS = true;
-            this.blocksLeft--;
+            //this.blocksLeft--;
 			blockToRemove = block;
         }
         if (block.intersectFlat(ball)) {
             bounceF = true;
-            this.blocksLeft--;
+            //this.blocksLeft--;
 			blockToRemove = block;
         }
 
