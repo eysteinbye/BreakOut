@@ -7,6 +7,9 @@ Lage Logo
 Preload
 Lage about
 Lage Privacy
+Sound Windows
+Move padle by tilting device
+lock orientation
 */
 
 
