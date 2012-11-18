@@ -1,7 +1,7 @@
 
 
-var BallSpeed = 2;
-var BallSpeedFactor = 1.5;
+var BallSpeed = 1; // 1
+var BallSpeedFactor = 1.5; // 2
 
 var BallObj = function () {
 

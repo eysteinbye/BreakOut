@@ -23,6 +23,7 @@ blockObj.prototype.intersectCorner = function (ball) {
     }
     return corner;
 };
+
 blockObj.prototype.intersectSide = function (ball) {
     var side = false;
     if (this.Show) {
@@ -30,22 +31,49 @@ blockObj.prototype.intersectSide = function (ball) {
             if (this.Right == ball.Left() || this.Left == ball.Right()) {
                 side = true;
             }
+			/*
+            if (this.Right+1 == ball.Left() || this.Left+1 == ball.Right()) {
+                side = true;
+            }
+			*/
         }
     }
     return side;
-
 };
+
 blockObj.prototype.intersectFlat = function (ball) {
     var flat = false;
     if (this.Show) {
-        if ((this.Left < ball.Left() && ball.Left() < this.Right) || (this.Left < ball.Right() && ball.Right() < this.Right)) {
-            if ((ball.Upper() <= this.Lower && ball.Upper() >=  this.Upper) || (ball.Lower() >= this.Upper && ball.Lower() <= this.Lower) ) {
+        if (this.leftSideWithinBlock(ball) || this.rightSideWithinBlock(ball)) {
+            if ( this.hitFromUnder(ball) || this.HitFromOver(ball) ) {
                 flat = true;
             }
         }
     }
     return flat;
 };
+
+
+
+blockObj.prototype.rightSideWithinBlock = function (ball) {
+	return (this.Left <= ball.Right() && ball.Right() <= this.Right);
+};
+
+blockObj.prototype.leftSideWithinBlock = function (ball) {
+	return (this.Left <= ball.Left() && ball.Left() <= this.Right);
+};
+
+
+
+blockObj.prototype.hitFromUnder = function (ball) {
+	return (ball.Upper() <= this.Lower && ball.Upper() >=  this.Upper);
+};
+
+blockObj.prototype.HitFromOver = function (ball) {
+	return (ball.Lower() >= this.Upper && ball.Lower() <= this.Lower);
+};
+
+
 
 blockObj.prototype.hit = function () {
  	this.hitsLeft--;

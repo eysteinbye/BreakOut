@@ -1,15 +1,22 @@
 /*
+Ikke gjør dette mer avansert nå, før alle bugs er fixa
+
 Dont have them global
 Add hightscore (online)
 Use a game-engin for faster loop
-Use sprites for bal, paddle and blocks
+Use sprites for ball, paddle and blocks
 Lage Logo
 Preload
 Lage about
 Lage Privacy
 Sound Windows
 Move padle by tilting device
-lock orientation
+Inc speed if tilted forward
+Lock orientation
+
+Bug : ball detect from side
+Bug : 2x blocks get mark when ball returns
+Bug : ball hits corner on block even if block is suronded by other blocks
 */
 
 
@@ -22,7 +29,7 @@ var paint;
 var gameLoopId;
 
 var DEMO_MODE = false;
-var showFps = false;
+var showFps = true;
 
 
 
@@ -63,15 +70,11 @@ var startGame = function () {
     canvasDom.width = WIDTH;
     canvasDom.height = HEIGHT;
 
-
-
     var widthOfAllBlocks = WIDTH - (BLOCKS_START_LEFT * 2);
     BLOCK_WIDTH = widthOfAllBlocks / NUMBER_OF_BLOCKS_ON_ROW;
 
-
     var heightOfAllBlocks = HEIGHT / 3;
     BLOCK_HEIGHT = heightOfAllBlocks / NUMBER_OF_BLOCKROWS;
-
 
     BALL_START_X = WIDTH / 2;
     BALL_START_Y = HEIGHT / 2;
@@ -79,15 +82,12 @@ var startGame = function () {
     BAR_START_X = WIDTH / 2;
     BAR_HEIGHT = BLOCK_HEIGHT / 2;
     BAR_WIDTH = BLOCK_WIDTH;
+	if(BAR_WIDTH<=50) BAR_WIDTH=50;
 
     var context = canvasDom.getContext('2d');
     var canvas = new CanvasObj(context, canvasDom);
     paint = new Paint(canvas);
 
-    run();
-};
-
-var run = function () {
 	ball = new BallObj();
     bar = new BarObj();
     board = new BoardObj();
@@ -106,40 +106,8 @@ var run = function () {
 		paint.drawBar(bar);	
 	}, true);
 
-    gameLoopId = setInterval(gameLoop, 4);
+    gameLoopId = setInterval(gameLoop, 5);
 };
-
-
-var onKey = function (evt) {
-    switch (evt.keyCode) {
-    case 80:  // p was pressed (112)
-        if (gameLoopId == null) {
-            pauseGame();			
-        } else {
-            resumeGame();
-        }
-        break;				
-    case 70:  // f
-       showFps = !showFps;
-	   if(!showFps) paint.clearFps();
-       break;
-	case 68: // d
-		DEMO_MODE = !DEMO_MODE;
-   		break;
-	}
-	
-};
-
-var pauseGame = function () {
-    gameLoopId = setInterval(gameLoop, 0);
-};
-
-var resumeGame = function () {
-    clearInterval(gameLoopId);
-    gameLoopId = null;
-};
-
-
 
 var gameLoop = function () {
 	var nowTime = new Date();
@@ -149,6 +117,19 @@ var gameLoop = function () {
 		paint.drawFps(Math.round(1 / (sidenSist/1000)));
 	}
 	lastTime = nowTime;
+	
+	/*
+	var inc = 4;
+	if( Math.abs(bye) > 0.5 ) inc = 5;
+	if( Math.abs(bye) > 0.8 ) inc = 7;
+	bar.X += (bye*inc);
+	if(bar.X<0) bar.X = 0;
+	var dd =  document.getElementById('GameCanvas').width;
+	if(bar.X>(dd-BAR_WIDTH)) bar.X = dd-BAR_WIDTH;
+	paint.drawBar(bar);	
+	
+	*/
+	
 	
    var block = board.didBallHitBlock(ball, score);
    if(block != null) {
@@ -184,6 +165,33 @@ var gameLoop = function () {
 
 };
 
+var onKey = function (evt) {
+    switch (evt.keyCode) {
+    case 80:  // p was pressed (112)
+        if (gameLoopId == null) {
+            pauseGame();			
+        } else {
+            resumeGame();
+        }
+        break;				
+    case 70:  // f
+       showFps = !showFps;
+	   if(!showFps) paint.clearFps();
+       break;
+	case 68: // d
+		DEMO_MODE = !DEMO_MODE;
+   		break;
+	}	
+};
+
+var pauseGame = function () {
+    gameLoopId = setInterval(gameLoop, 0);
+};
+
+var resumeGame = function () {
+    clearInterval(gameLoopId);
+    gameLoopId = null;
+};
 
 function timeDifference(endDate,startDate) {
     var difference = endDate.getTime() - startDate.getTime();
