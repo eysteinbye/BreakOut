@@ -1,7 +1,7 @@
-var ScoreObj = function () {
+var Score = function() {
     this.Score = 0;
-  };
+};
 
-ScoreObj.prototype.Add = function (points) {
+Score.prototype.Add = function(points) {
     this.Score += points;
 };

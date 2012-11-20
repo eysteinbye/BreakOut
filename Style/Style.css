@@ -1,1 +1,22 @@
-body{	background-color: white;	margin: 0;	padding: 0;}canvas{	background-color: black;/*	border: solid 5px Gray;	border-radius: 5px;	*/}h1{	color: blue;}h2{	color: blue;	display: inline;}.button{	position: absolute;	left: 380px;	top: 350px;	z-index: 1;}
+body {
+	background-color: white;
+	margin: 0;
+	padding: 0;
+}
+
+canvas { background-color: black;
+	/*	border: solid 5px Gray;	border-radius: 5px;	*/ }
+
+h1 { color: blue; }
+
+h2 {
+	color: blue;
+	display: inline;
+}
+
+.button {
+	left: 380px;
+	position: absolute;
+	top: 350px;
+	z-index: 1;
+}
