@@ -30,11 +30,17 @@ var gameLoop = function() {
 
         if (board.blocksLeft == 0) {
             // Level cleared
-            score.Add(100);
-            clearInterval(gameLoopId);
-            startGame();
-            // Start level 2
-
+    		score.Add(100 * level);
+			
+			level ++;			
+			if(level==gameEndLevel){
+				// Hi-Score ?
+				
+			
+			}else{
+            	clearInterval(gameLoopId);
+            	startGame();
+			}
         }
     }
 
@@ -44,6 +50,9 @@ var gameLoop = function() {
         else {
             if (!ball.intersects(bar)) {
                 // if ball misses bar, then game is over
+				// Hi-Score
+				
+				level = 1;
                 clearInterval(gameLoopId);
                 startGame();
             }
@@ -53,6 +62,8 @@ var gameLoop = function() {
     paint.drawBall(ball);
 
 };
+
+
 
 var onKey = function(evt) {
     switch (evt.keyCode) {

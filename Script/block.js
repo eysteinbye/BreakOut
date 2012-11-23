@@ -11,64 +11,78 @@ var Block = function(x, y, durability) {
     this.Show = true;
 };
 
-// Do we intersect a corner
-Block.prototype.intersectCorner = function(ball) {
-    var corner = false;
-    if (this.Show) {
-        if (this.Lower == ball.Upper() && this.Left == ball.Right() && ball.goingUpRight()) corner = true; // Lower left corner
-        if (this.Lower == ball.Upper() && this.Right == ball.Left() && ball.goingUpLeft()) corner = true; // Lower right corner
-        if (this.Upper == ball.Lower() && this.Left == ball.Right() && ball.goingDownRight()) corner = true; // Upper Left corner
-        if (this.Upper == ball.Lower() && this.Right == ball.Left() && ball.goingDownLeft()) corner = true; // Upper Right corner
-    }
-    return corner;
+Block.prototype.intersect = function(ball) {
+	if (this.Show) {
+		if ((this.X <= ball.Left() && ball.Left() <= this.Right) || (this.X <= ball.Right() && ball.Right() <= this.Right)){
+			if((this.Y <= ball.Upper() && ball.Upper() <= this.Lower) || (this.Y <= ball.Lower() && ball.Lower() <= this.Lower)){
+				if(this.X < ball.X && ball.X < this.Right) {
+					ball.bounceOfCeling(); 
+					return true;
+					// flat = true;
+				}else if(this.Y < ball.Y && ball.Y < this.Lower) {
+					ball.bounceOfWall(); 
+					return true;
+					
+					// side = true;
+				}else {		
+					// corner
+					// har corner blokk ve siden av?
+			
+					var under = false;
+					var over = false;
+					var middle = false;
+					if(ball.Upper() < this.Lower){
+						under=true;
+					}else if(ball.Lower() < this.Y){
+						over=true;
+					}else{
+						middle=true;
+					}
+					
+					var right = false;
+					var left = false;
+					var center = false;
+					if(ball.Left() < this.Right){
+						right=true;
+					}else if(ball.Right() < this.Left){
+						left=true;
+					}else{
+						center=true;
+					}
+					
+					if(under && right && ball.goingUpLeft()) ball.bounceBack();
+					if(over && right && ball.goingDownleft()) ball.bounceBack();
+					if(under && left && ball.goingUpRight()) ball.bounceBack();
+					if(over && left && ball.goingDownRight()) ball.bounceBack();
+					
+					// Skal disse ha en litt annen vinkel?
+					if(middle) ball.bounceOfWall();
+					if(center) ball.bounceOfCeling();
+					return true;
+
+				}
+					
+	
+				//console.log("Side " + side + " Flat " + flat + " Corner " + corner);
+				//alert("Side " + side + " Flat " + flat + " Corner " + corner);
+			
+				/*
+				Sjekk rettningen ballen har, og bounce ballen og hit block i denne classen
+				
+				*/
+			
+			
+			}
+		
+		}
+	
+	
+	
+	}
+	return false;
 };
 
-Block.prototype.intersectSide = function(ball) {
-    var side = false;
-    if (this.Show) {
-        if ((this.Upper < ball.Upper() && ball.Upper() < this.Lower) || (this.Upper < ball.Lower() && ball.Lower() < this.Lower)) {
-            if (this.Right == ball.Left() || this.Left == ball.Right()) {
-                side = true;
-            }
-            /*
-            if (this.Right+1 == ball.Left() || this.Left+1 == ball.Right()) {
-                side = true;
-            }
-			*/
-        }
-    }
-    return side;
-};
 
-Block.prototype.intersectFlat = function(ball) {
-    var flat = false;
-    if (this.Show) {
-        if (this.leftSideWithinBlock(ball) || this.rightSideWithinBlock(ball)) {
-            if (this.hitFromUnder(ball) || this.HitFromOver(ball)) {
-                flat = true;
-            }
-        }
-    }
-    return flat;
-};
-
-
-Block.prototype.rightSideWithinBlock = function(ball) {
-    return (this.Left <= ball.Right() && ball.Right() <= this.Right);
-};
-
-Block.prototype.leftSideWithinBlock = function(ball) {
-    return (this.Left <= ball.Left() && ball.Left() <= this.Right);
-};
-
-
-Block.prototype.hitFromUnder = function(ball) {
-    return (ball.Upper() <= this.Lower && ball.Upper() >= this.Upper);
-};
-
-Block.prototype.HitFromOver = function(ball) {
-    return (ball.Lower() >= this.Upper && ball.Lower() <= this.Lower);
-};
 
 
 Block.prototype.hit = function() {

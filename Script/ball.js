@@ -2,8 +2,8 @@ var BallSpeed = 1;
 var BallSpeedFactor = 1.5;
 
 var Ball = function() {
-    this.X = BALL_START_X;
-    this.Y = BALL_START_Y;
+    this.X = BALL_START_X; // Center
+    this.Y = BALL_START_Y; // Center
     this.dx = BallSpeed;
     this.dy = -BallSpeed;
     this.Radius = BALL_RADIUS;

@@ -1,9 +1,6 @@
 ﻿/*
-Ikke gjør dette mer avansert nå, før alle bugs er fixa
 
-Dont have them global
 Add hightscore (online)
-Use a game-engin for faster loop
 Use sprites for ball, paddle and blocks
 Lage Logo
 Preload
@@ -14,16 +11,16 @@ Move padle by tilting device
 Inc speed if tilted forward
 Lock orientation
 
-Bug : ball detect from side
-Bug : 2x blocks get mark when ball returns
-Bug : ball hits corner on block even if block is suronded by other blocks
 */
 
-
+var level = 1;
+var gameEndLevel = 4;
 var ball;
 var bar;
 var board;
 var score;
+score = new Score();
+
 var paint;
 
 var gameLoopId;
@@ -93,7 +90,6 @@ var startGame = function() {
     bar = new Bar();
     board = new Board();
 
-    score = new Score();
     // Done init
 
 
