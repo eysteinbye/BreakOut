@@ -1,5 +1,5 @@
 var BallSpeed = 1;
-var BallSpeedFactor = 1.5;
+var BallSpeedFactor = 2;
 
 var Ball = function() {
     this.X = BALL_START_X; // Center

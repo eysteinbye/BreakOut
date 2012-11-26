@@ -84,6 +84,12 @@ var onKey = function(evt) {
 // d
         DEMO_MODE = !DEMO_MODE;
         break;
+	case 69:
+        clearInterval(introId);
+	    context.clearRect(0,0, WIDTH, HEIGHT);
+		
+		startGame();
+		break;
     }
 };
 

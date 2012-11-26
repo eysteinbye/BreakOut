@@ -15,13 +15,76 @@
         <script src="Script/init.js"> </script>
         <script src="Script/gameloop.js"> </script>
 
+
+
+		<script>
+		/*
+	    var YY = 400;
+	    var XX = 20;
+		
+		var tt = 0;
+		function eee() {		
+			
+   		 	var aaa = setInterval(write, 5);
+		
+			
+		}
+		function write(){
+
+			var str = "- Reflector - HardCore BreakOut Clone - by Eystein Bye. Music by Wolfgang Amadeus Mozart - Symphony No. 38 in D najor, Adagio - Allegro";
+		
+		
+			
+		
+		    var canvasDom = document.getElementById('GameCanvas');
+		    canvasDom.style.visibility = "visible";
+		    canvasDom.style.cursor = "none";
+		    WIDTH = (window.innerWidth);
+		    HEIGHT = (window.innerHeight);
+		    canvasDom.width = WIDTH;
+		    canvasDom.height = HEIGHT;
+
+		    var context = canvasDom.getContext('2d');
+		    var canvas = new Canvas(context, canvasDom);
+		
+			canvas.Context.font='bold 38px Verdana';
+			var lineHeight=context.measureText(str).width;
+			
+
+
+			tt = tt + 0.03;
+			if(tt>Math.PI*2) tt=0;
+		
+			XX--;
+			
+			if(XX< -(lineHeight) ) XX = WIDTH;
+			
+			YY =  (50 * Math.cos(tt)) + 150;
+			
+			
+			
+		
+
+		 //   canvas.Context.clearRect(10, top, 300, height);
+
+		    canvas.Context.strokeStyle = '#'+Math.floor(Math.random()*16777215).toString(16);
+		   // canvas.Context.font = '14px verdana';
+		    canvas.Context.strokeText(str , XX, YY);
+			
+		}
+		*/
+		
+		</script>
+
+
+
         <link rel="stylesheet" type="text/css" href="Style/Style.css" />
 
         <title>Demo</title>
 
     </head>
 
-    <body>
+    <body onload="startIntro()">
 
         <input type="button" value="Start" id="startButton" class="button" onclick=" startGame() " />
 

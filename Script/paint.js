@@ -2,6 +2,38 @@ var Paint = function(c) {
     this.canvas = c;
 };
 
+
+Paint.prototype.introText = function() {
+
+	var str = "Adligo Games present - Reflector -     A HardCore BreakOut Clone - by Eystein Bye. Music by Wolfgang Amadeus Mozart - Symphony No. 38 in D najor, Adagio - Allegro";
+
+	var kk = "Tap to start..."
+
+	context.font='bold 38px Verdana';
+	var lineLength=context.measureText(str).width;
+		
+    context.clearRect(0,0, WIDTH, HEIGHT);
+ 	XX--;
+	if(XX < -(lineLength)) XX = WIDTH;
+			
+	tt = radi(tt);
+	YY =  bounce(tt);
+			
+    context.strokeStyle = randomColor();
+    context.strokeText(str , XX, YY);
+	
+	// Make tap text go outher way
+	var dd = Math.abs(XX);
+	if(dd > WIDTH) dd = WIDTH - dd;
+    context.strokeText(kk , Math.abs(dd), 500);
+	
+};
+
+
+
+
+
+
 Paint.prototype.drawScore = function(score) {
     var top = this.canvas.Height - MARGING_UNDER_BAR + BAR_HEIGHT;
     var height = this.canvas.Height - top;
