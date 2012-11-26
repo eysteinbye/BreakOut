@@ -1,31 +1,35 @@
-var Board = function() {
-    this.Rows = NUMBER_OF_BLOCKROWS;
-    this.Columns = NUMBER_OF_BLOCKS_ON_ROW;
 
-    this.Upper = BLOCKS_START_TOP;
+
+var Board = function (rr) {
+    this.Rows = rr.NUMBER_OF_BLOCKROWS;
+    this.Columns = rr.NUMBER_OF_BLOCKS_ON_ROW;
+
+
+    this.Upper = rr.BLOCKS_START_TOP;
     this.Lower;
-    this.Left = BLOCKS_START_LEFT;
+    this.Left = rr.BLOCKS_START_LEFT;
     this.Right;
 
     this.blocksTotal = this.Columns * this.Rows;
     this.blocksLeft = this.blocksTotal;
     this.blocks = new Array(this.blocksTotal);
 
-	var levelMap;
-	if(level==1)
-		levelMap = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
-	else if (level==2)
-   	 	levelMap = [1, 2, 2, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1, 2, 2, 1, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1, 2, 2, 1, 1, 1, 1, 2, 1, 1];
-	else if (level==3)
-		levelMap = [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2];
-   
-    var tmpBlock = new Block(0, 0, 1);
-    var x = this.Left;
-    var y = this.Upper;
-    var count = 0;
+    var levelMap;
+    if (level === 1) {
+        levelMap = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+    } else if (level === 2) {
+        levelMap = [1, 2, 2, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1, 2, 2, 1, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1, 2, 2, 1, 1, 1, 1, 2, 1, 1];
+    } else if (level === 3) {
+        levelMap = [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2];
+    }
+
+    var tmpBlock = new Block(0, 0, 1, rr.BLOCK_WIDTH, rr.BLOCK_HEIGHT),
+    x = this.Left,
+    y = this.Upper,
+    count = 0;
     for (var i = 0; i < this.Rows; i++) {
         for (var j = 0; j < this.Columns; j++) {
-            this.blocks[count] = new Block(x, y, levelMap[count]);
+            this.blocks[count] = new Block(x, y, levelMap[count], rr.BLOCK_WIDTH, rr.BLOCK_HEIGHT);
             count++;
             x += tmpBlock.Width;
         }
@@ -36,13 +40,12 @@ var Board = function() {
     this.Lower = y;
 };
 
-Board.prototype.didBallHitBlock = function(ball) {
-    var blockToRemove = null;
+Board.prototype.didBallHitBlock = function (ball) {
     for (var i = 0; i < this.blocks.length; i++) {
         var block = this.blocks[i];
-		if(block.intersect(ball)){
+        if (block.intersect(ball)) {
             return block;
-		}
+        }
     }
-	return null;
+    return null;
 };
