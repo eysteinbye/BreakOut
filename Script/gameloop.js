@@ -34,15 +34,20 @@ var score = new Score();
 var context;
 
 
-/*
+
 var BALL_START_X;
 var BALL_START_Y;
+var BALL_RADIUS = 5;
 
+var WIDTH = window.innerWidth;
+   var HEIGHT = window.innerHeight;
+   var MARGING_UNDER_BAR;
+
+/*
 var BAR_START_X;
 var BAR_WIDTH;
 var BAR_HEIGHT;
 
-var MARGING_UNDER_BAR;
 
 var BLOCKS_START_LEFT;
 var BLOCKS_START_TOP;
@@ -65,12 +70,11 @@ var showFps = true;
 
 
 
+
 /*
- var WIDTH = window.innerWidth;
-    var HEIGHT = window.innerHeight;
     canvasDom.width = WIDTH;
     canvasDom.height = HEIGHT;
-
+	
     BLOCKS_START_LEFT = WIDTH / 10;
     BLOCKS_START_TOP = WIDTH / 20;
 
@@ -81,10 +85,10 @@ var showFps = true;
     BLOCK_HEIGHT = heightOfAllBlocks / NUMBER_OF_BLOCKROWS;
 
     MARGING_UNDER_BAR = BLOCK_HEIGHT;
-
+*/
     BALL_START_X = WIDTH / 2;
     BALL_START_Y = HEIGHT - Math.round(MARGING_UNDER_BAR * 2);
-
+	/*
     BAR_START_X = WIDTH / 2;
     BAR_HEIGHT = BLOCK_HEIGHT / 2;
     BAR_WIDTH = BLOCK_WIDTH;
