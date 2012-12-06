@@ -1,12 +1,14 @@
-var BallSpeed = 1;
-var BallSpeedFactor = 2;
 
-var Ball = function() {
-    this.X = BALL_START_X; // Center
-    this.Y = BALL_START_Y; // Center
+var Ball = function (YYY, BallSpeed, BallSpeedFactor) {
+    this.X = YYY.BALL_START_X; // Center
+    this.Y = YYY.BALL_START_Y; // Center
+    this.YYY = YYY;
+    this.BallSpeed = BallSpeed;
+    this.BallSpeedFactor = BallSpeedFactor;
+
     this.dx = BallSpeed;
     this.dy = -BallSpeed;
-    this.Radius = BALL_RADIUS;
+    this.Radius = YYY.BALL_RADIUS;
     this.Diameter = this.Radius * 2;
 
     this.Left = function() { return this.X - this.Radius; };
@@ -23,7 +25,7 @@ var Ball = function() {
 Ball.prototype.move = function() {
     this.X += this.dx;
     this.Y += this.dy;
-    if (this.Left() <= 0 || this.Right() >= WIDTH) this.bounceOfWall();
+    if (this.Left() <= 0 || this.Right() >= this.YYY.WIDTH) this.bounceOfWall();
     if (this.Upper() <= 0) this.bounceOfCeling();
 };
 Ball.prototype.bounceOfWall = function() {
@@ -37,15 +39,15 @@ Ball.prototype.bounceOfBar = function() {
     var posOnBar = this.X - bar.X;
     var rel = (posOnBar / bar.Width) * 100;
 
-    if (Math.abs(this.dy) == (BallSpeed * BallSpeedFactor)) this.dy /= (BallSpeed * BallSpeedFactor);
+    if (Math.abs(this.dy) == (this.BallSpeed * this.BallSpeedFactor)) this.dy /= (this.BallSpeed * this.BallSpeedFactor);
 
     this.dy = -this.dy;
     if (rel < 10) {
-        this.dy *= (BallSpeed * BallSpeedFactor);
-        this.dx = -BallSpeed;
+        this.dy *= (this.BallSpeed * this.BallSpeedFactor);
+        this.dx = -this.BallSpeed;
     } else if (rel > 90) {
-        this.dy *= (BallSpeed * BallSpeedFactor);
-        this.dx = BallSpeed;
+        this.dy *= (this.BallSpeed * this.BallSpeedFactor);
+        this.dx = this.BallSpeed;
     }
     this.paddleSnd.play();
 };
@@ -59,20 +61,20 @@ Ball.prototype.bounceBack = function() {
 
 // Direction of the ball (needed when hitting corners)
 Ball.prototype.goingDownRight = function() {
-    return (this.dx == BallSpeed && this.dy == BallSpeed);
+    return (this.dx == this.BallSpeed && this.dy == this.BallSpeed);
 };
 Ball.prototype.goingUpRight = function() {
-    return (this.dx == BallSpeed && this.dy == -BallSpeed);
+    return (this.dx == this.BallSpeed && this.dy == -this.BallSpeed);
 };
 Ball.prototype.goingDownLeft = function() {
-    return (this.dx == -BallSpeed && this.dy == BallSpeed);
+    return (this.dx == -this.BallSpeed && this.dy == this.BallSpeed);
 };
 Ball.prototype.goingUpLeft = function() {
-    return (this.dx == -BallSpeed && this.dy == -BallSpeed);
+    return (this.dx == -this.BallSpeed && this.dy == -this.BallSpeed);
 };
 
 Ball.prototype.hitLower = function() {
-    return (this.Lower() >= (HEIGHT - MARGING_UNDER_BAR));
+    return (this.Lower() >= (this.YYY.HEIGHT - this.YYY.MARGING_UNDER_BAR));
 };
 
 Ball.prototype.withinRectangle = function(rect) {
