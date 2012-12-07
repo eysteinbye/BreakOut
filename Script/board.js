@@ -1,13 +1,13 @@
 
 
-var Board = function (rr) {
-    this.Rows = rr.NUMBER_OF_BLOCKROWS;
-    this.Columns = rr.NUMBER_OF_BLOCKS_ON_ROW;
+var Board = function (setUp) {
+    this.Rows = setUp.NUMBER_OF_BLOCKROWS;
+    this.Columns = setUp.NUMBER_OF_BLOCKS_ON_ROW;
 
 
-    this.Upper = rr.BLOCKS_START_TOP;
+    this.Upper = setUp.BLOCKS_START_TOP;
     this.Lower;
-    this.Left = rr.BLOCKS_START_LEFT;
+    this.Left = setUp.BLOCKS_START_LEFT;
     this.Right;
 
     this.blocksTotal = this.Columns * this.Rows;
@@ -23,13 +23,13 @@ var Board = function (rr) {
         levelMap = [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2];
     }
 
-    var tmpBlock = new Block(0, 0, 1, rr.BLOCK_WIDTH, rr.BLOCK_HEIGHT),
+    var tmpBlock = new Block(0, 0, 1, setUp.BLOCK_WIDTH, setUp.BLOCK_HEIGHT),
     x = this.Left,
     y = this.Upper,
     count = 0;
     for (var i = 0; i < this.Rows; i++) {
         for (var j = 0; j < this.Columns; j++) {
-            this.blocks[count] = new Block(x, y, levelMap[count], rr.BLOCK_WIDTH, rr.BLOCK_HEIGHT);
+            this.blocks[count] = new Block(x, y, levelMap[count], setUp.BLOCK_WIDTH, setUp.BLOCK_HEIGHT);
             count++;
             x += tmpBlock.Width;
         }

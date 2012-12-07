@@ -105,7 +105,7 @@ Paint.prototype.drawBar = function (bar) {
 };
 Paint.prototype.drawBall = function (ball) {
     //  Clear the old ball
-    this.canvas.Context.clearRect(ball.X - ball.Radius, ball.Y - ball.Radius, ball.Diameter, ball.Diameter);
+    this.canvas.Context.clearRect(ball.X - ball.setUp.BALL_RADIUS, ball.Y - ball.setUp.BALL_RADIUS, ball.Diameter, ball.Diameter);
     // Move the ball
     ball.move();
     // Draw the ball
@@ -116,7 +116,7 @@ Paint.prototype.drawBall = function (ball) {
     gradient.addColorStop(0.5, 'Gray');
     this.canvas.Context.fillStyle = gradient;
     // Draws a circle of radius 20 
-    this.canvas.Context.arc(ball.X, ball.Y, ball.Radius, 0, Math.PI * 2, true);
+    this.canvas.Context.arc(ball.X, ball.Y, ball.setUp.BALL_RADIUS, 0, Math.PI * 2, true);
     this.canvas.Context.closePath();
     this.canvas.Context.fill();
 };

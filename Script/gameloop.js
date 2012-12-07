@@ -48,17 +48,17 @@ var showFps = true;
 function startIntro() {
     var canvasDom = document.getElementById('GameCanvas');
 
-    var XXX = new SetUp();
+    var setUp = new SetUp();
 
-    canvasDom.width = XXX.width;
-    canvasDom.height = XXX.height;
+    canvasDom.width = setUp.width;
+    canvasDom.height = setUp.height;
   
     
     canvasDom.style.cursor = "none";
    
 
     context = canvasDom.getContext('2d');
-    var canvas = new Canvas(context, canvasDom, XXX.MARGING_UNDER_BAR);
+    var canvas = new Canvas(context, canvasDom, setUp.MARGING_UNDER_BAR);
     paint = new Paint(canvas);
 
 
@@ -80,14 +80,14 @@ var board;
 var startGame = function () {
 
 
-    var YYY = new SetUp();
+    var setUp = new SetUp();
 
 
-    ball = new Ball(YYY, BallSpeed, BallSpeedFactor);
+    ball = new Ball(setUp, BallSpeed, BallSpeedFactor);
 
 
-    bar = new Bar(YYY);
-    board = new Board(YYY);
+    bar = new Bar(setUp);
+    board = new Board(setUp);
 
     // draw once, but not in gameloop
     paint.drawBlocks(board.blocks);
@@ -130,18 +130,14 @@ var gameLoop = function () {
         }
         score.Add(5);
         paint.drawScore(score.Score);
-        // Redraw
         paint.drawBlock(block);
 
         if (board.blocksLeft === 0) {
             // Level cleared
             score.Add(100 * level);
-
             level++;
             if (level === gameEndLevel) {
                 // Hi-Score ?
-
-
             } else {
                 clearInterval(gameLoopId);
                 startGame();
@@ -156,7 +152,6 @@ var gameLoop = function () {
             if (!ball.intersects(bar)) {
                 // if ball misses bar, then game is over
                 // Hi-Score
-
                 level = 1;
                 clearInterval(gameLoopId);
                 startGame();
@@ -199,11 +194,11 @@ var onKey = function(evt) {
     }
 };
 
-var pauseGame = function() {
+var pauseGame = function () {
     gameLoopId = setInterval(gameLoop, 0);
 };
 
-var resumeGame = function() {
+var resumeGame = function () {
     clearInterval(gameLoopId);
     gameLoopId = null;
 };
